@@ -10,6 +10,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.client.Client;
@@ -55,10 +56,10 @@ public class Gateway {
     	
     	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer".length()).trim();
+        newUser.setToken(token);
         System.out.println(token);
         
-        
-		Client client = ClientBuilder.newClient();
+        Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/ms1/api/users/signup");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
@@ -69,6 +70,61 @@ public class Gateway {
     	
 		return Response.ok().build();
     }
+    
+    @GET
+    @Path("/veiculos")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getVeiculobyId(Veiculo veiculo) {
+    	
+        
+		Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/VeiculoMS/api/veiculos/{id}");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(veiculo, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @POST
+    @Path("/criarveiculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createVeiculo(Veiculo veiculo) {
+    	
+        
+		Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/VeiculoMS/api/criarveiculo");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(veiculo, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @PUT
+    @Path("/atualizarveiculo")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response updateVeiculo(Veiculo veiculo) {
+    	
+        
+		Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/VeiculoMS/api/atualizarveiculo");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(veiculo, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
     
 //    @POST
 //	@Path("/login")

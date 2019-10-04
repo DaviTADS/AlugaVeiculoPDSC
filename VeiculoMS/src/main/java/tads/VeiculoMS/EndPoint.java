@@ -21,7 +21,7 @@ import tads.entidade.VeiculoBD;
 /**
  * Root resource (exposed at "veiculo" path)
  */
-@Path("veiculo")
+@Path("veiculos")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class EndPoint {
@@ -58,7 +58,8 @@ public class EndPoint {
     
     
     @PUT
-    public Response updateUser(Veiculo changeVeiculo) {
+    @Path("/atualizarveiculo")
+    public Response updateVeiculo(Veiculo changeVeiculo) {
     	  VeiculoBD veiculo = new VeiculoBD();
     	  String descricao = changeVeiculo.getDescricao();
     	  String anofabricacao = changeVeiculo.getAnofabricacao();
@@ -67,6 +68,8 @@ public class EndPoint {
     	  
 		return Response.ok(VeiculoBean.atualizaVeiculo(veiculo)).build();    	
     }
+    
+    
     
    
 }
