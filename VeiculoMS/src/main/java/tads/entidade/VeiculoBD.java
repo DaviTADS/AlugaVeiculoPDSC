@@ -27,10 +27,10 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author davi, davydadriel
+ * @author davi
  */
 @Entity
-@Table(name = "TB_Veiculo")
+@Table(name = "TB_Veiculo",catalog = "alugaveiculos")
 @NamedQueries(
         {
             @NamedQuery(
