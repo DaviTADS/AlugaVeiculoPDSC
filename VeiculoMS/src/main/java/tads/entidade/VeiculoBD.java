@@ -20,9 +20,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
 //import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -35,12 +33,12 @@ import javax.validation.constraints.Size;
         {
             @NamedQuery(
                     name = VeiculoBD.VeiculoPorTipo,
-                    query = "SELECT v FROM Veiculo v WHERE v.tipo = ?1"
-            ),
-            @NamedQuery(
-                    name = VeiculoBD.VeiculoPorMotorista,
-                    query = "SELECT v FROM Veiculo v WHERE v.motorista IS NOT NULL"
+                    query = "SELECT v FROM VeiculoBD v WHERE v.tipo = ?1"
             )
+//            @NamedQuery(
+//                    name = VeiculoBD.VeiculoPorMotorista,
+//                    query = "SELECT v FROM VeiculoBD v WHERE v.motorista IS NOT NULL"
+//            )
         }
 )
 public class VeiculoBD implements Serializable {
@@ -54,7 +52,7 @@ public class VeiculoBD implements Serializable {
     protected Long id;
     
     
-    @Size(max = 50)
+    //@Size(max = 50)
     @ElementCollection
     @CollectionTable(name = "TB_Placa",
             joinColumns = @JoinColumn(name = "ID_Veiculo"))
@@ -66,38 +64,38 @@ public class VeiculoBD implements Serializable {
 //    @JoinColumn(name = "ID_Motorista", referencedColumnName = "ID_Pessoa")
 //    private Motorista motorista;
     
-    @Size(max=4,min=4)
-    @NotBlank
+    //@Size(max=4,min=4)
+    //@NotBlank
     @Column(name = "DT_ANOF", nullable = true)
     protected String anofabricacao;
     
-    @NotBlank
-    @Size(max = 40)
+    //@NotBlank
+//    @Size(max = 40)
     @Column(name="TXT_MODELO",length = 40 , nullable = false)
     protected String modelo;
     
-    @NotBlank
-    @Size(max = 20)
+//    @NotBlank
+//    @Size(max = 20)
     //@ValidaFabricante
     @Column(name="TXT_FABRICANTE",length = 20 , nullable = false)
     protected String fabricante;
     
-    @NotNull
+//    @NotNull
     @Column(name="NUM_CAPACIDADE", nullable = false)
     protected int capacidade;
     
-    @NotBlank
+//    @NotBlank
     //@ValidaTipo
     @Column(name="TXT_TIPO", nullable = false)
     protected String tipo;
     
-    @NotBlank
-    @Size(max = 40)
+//    @NotBlank
+//    @Size(max = 40)
     @Column(name="TXT_PORTE",length = 40 , nullable = false)
     protected String porte;
     
-    @NotBlank
-    @Size(max = 200)
+//    @NotBlank
+//    @Size(max = 200)
     @Column(name = "TXT_DESC", length = 200 , nullable = false)
     protected String descricao;
 

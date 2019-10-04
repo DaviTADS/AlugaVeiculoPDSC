@@ -6,7 +6,7 @@
     <persistence-unit name="pu" transaction-type="JTA">
  
         <jta-data-source>jdbc/alugaveiculo</jta-data-source>
-        <class>tads.entidades.VeiculoBD</class>
+        <class>tads.entidade.VeiculoBD</class>
     </persistence-unit>
  
 </persistence>
