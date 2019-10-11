@@ -9,7 +9,7 @@ import java.util.Collection;
 
 public abstract class Pessoa{
    
-     
+	
     protected Long id;
     protected Collection<String> telefones;
     public String nome;
@@ -55,7 +55,8 @@ public abstract class Pessoa{
     public void setEmail(String email) {
         this.email = email;
     }
-
+    
+    
  
     
 }

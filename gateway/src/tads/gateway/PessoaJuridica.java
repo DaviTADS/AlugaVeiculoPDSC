@@ -10,8 +10,8 @@ public class PessoaJuridica extends Pessoa {
 	private String razaosocial;
 	private String cnpj;
 	private String creditos;
-	private String token;
-
+	private String token; 
+	
 	public String getToken() {
 		return token;
 	}

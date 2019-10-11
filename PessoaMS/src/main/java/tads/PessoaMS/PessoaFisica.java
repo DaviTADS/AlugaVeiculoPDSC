@@ -12,7 +12,15 @@ public class PessoaFisica extends Pessoa {
    private String sobrenome;
    private String cpf;
    private String creditos;
+   private String token;
    
+   public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
    
    public String getCpf() {
        return cpf;

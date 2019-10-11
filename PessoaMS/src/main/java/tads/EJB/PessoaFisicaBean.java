@@ -13,6 +13,7 @@ import javax.persistence.TypedQuery;
 
 import tads.entidade.PessoaFisicaBD;
 
+
 @Stateless(name = "PessoafBean")
 @LocalBean  
 //@ValidateOnExecution(type = ExecutableType.ALL)
@@ -62,6 +63,14 @@ public class PessoaFisicaBean {
         return pessoaf.getNome();
         
     }
+    
+    public static PessoaFisicaBD cadastrarPessoaFisica(String nome, String senha,String token) {
+		PessoaFisicaBD pessoaf = new PessoaFisicaBD();
+		pessoaf.setNome(nome);
+		pessoaf.setSenha(senha);
+		em.persist(pessoaf);
+		return pessoaf;
+	}
     
     
 }

@@ -12,7 +12,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 
+import tads.EJB.PessoaFisicaBean;
 import tads.EJB.PessoaJuridicaBean;
+import tads.entidade.PessoaFisicaBD;
 import tads.entidade.PessoaJuridicaBD;
 
 
@@ -44,6 +46,18 @@ public class EndPoint2 {
     	
     	return Response.ok(PessoaJuridicaBean.consultarPessoaJPorId(id)).build();
     }
+	
+	@POST
+    @Path("/signup")
+	public Response createPessoaJuridica(PessoaJuridica NewUser) {
+    	String login = NewUser.getNome();
+    	String senha = NewUser.getSenha();
+    	String token = NewUser.getToken();
+    	PessoaJuridicaBD user = PessoaJuridicaBean.cadastrarPessoaJuridica(login, PasswordUtils.digestPassword(senha), token);
+		if (user != null)
+			return Response.ok(user).build();
+		return Response.status(NOT_FOUND).build();
+	}
     
     
     @POST

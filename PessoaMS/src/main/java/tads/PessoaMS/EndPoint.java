@@ -16,6 +16,9 @@ import javax.ws.rs.core.Response.Status;
 
 import tads.EJB.PessoaFisicaBean;
 import tads.entidade.PessoaFisicaBD;
+//import tads.entidades.UserBD;
+//import tads.ms1.PasswordUtils;
+//import tads.ms1.User;
 
 
 
@@ -40,6 +43,18 @@ public class EndPoint {
     	
     	return Response.ok(PessoaFisicaBean.consultarPessoaFPorId(id)).build();
     }
+	
+	@POST
+    @Path("/signup")
+	public Response createPessoaFisica(PessoaFisica NewUser) {
+    	String login = NewUser.getNome();
+    	String senha = NewUser.getSenha();
+    	String token = NewUser.getToken();
+    	PessoaFisicaBD user = PessoaFisicaBean.cadastrarPessoaFisica(login, PasswordUtils.digestPassword(senha), token);
+		if (user != null)
+			return Response.ok(user).build();
+		return Response.status(NOT_FOUND).build();
+	}
     
     
     @POST

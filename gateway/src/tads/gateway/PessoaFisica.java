@@ -8,11 +8,18 @@ public class PessoaFisica extends Pessoa {
    
    //private List<Aluguel> alugueis; 
    
-   
+   private String token;
    private String sobrenome;
    private String cpf;
    private String creditos;
    
+   public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
    
    public String getCpf() {
        return cpf;

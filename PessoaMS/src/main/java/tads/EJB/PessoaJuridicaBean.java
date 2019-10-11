@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
 
-
+import tads.entidade.PessoaJuridicaBD;
 import tads.entidade.PessoaJuridicaBD;
 
 /**
@@ -56,6 +56,12 @@ public class PessoaJuridicaBean {
         return em.find(PessoaJuridicaBD.class, id);
     }
     
-    
+    public static PessoaJuridicaBD cadastrarPessoaJuridica(String nome, String senha,String token) {
+		PessoaJuridicaBD pessoaj = new PessoaJuridicaBD();
+		pessoaj.setNome(nome);
+		pessoaj.setSenha(senha);
+		em.persist(pessoaj);
+		return pessoaj;
+	}
     
 }

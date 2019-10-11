@@ -50,9 +50,9 @@ public class Gateway {
     }
     
     @POST
-    @Path("/new_user")
+    @Path("/new_pessoafisica")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(User newUser) {
+    public Response addUser(PessoaFisica newUser) {
     	
     	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
         String token = authorizationHeader.substring("Bearer".length()).trim();
@@ -60,7 +60,29 @@ public class Gateway {
         System.out.println(token);
         
         Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/ms1/api/users/signup");
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/signup");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @POST
+    @Path("/new_pessoajuridica")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addUser(PessoaJuridica newUser) {
+    	
+    	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        String token = authorizationHeader.substring("Bearer".length()).trim();
+        newUser.setToken(token);
+        System.out.println(token);
+        
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/signup");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
@@ -128,14 +150,11 @@ public class Gateway {
     
 //    @POST
 //	@Path("/login")
-//    public Response login(User user) {
+//    public Response login(User Pessoa) {
 //		
 //    		
 //		
-//		String token = JwTokenHelper.getInstance().generateToken(login, password);
-//		return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 //		
-//		//return Response.status(NOT_FOUND).build(); 
 //	}
     
 }
