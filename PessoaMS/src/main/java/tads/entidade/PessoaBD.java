@@ -2,6 +2,7 @@ package tads.entidade;
 
 import java.io.Serializable;
 import java.util.Collection;
+
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -15,16 +16,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 
 /**
  *
- * @author davi, davydadriel
+ * @author davi
  */
 @Entity
 //@SecondaryTable(name = "TB_Telefone",
@@ -43,7 +39,7 @@ public abstract class PessoaBD implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     protected Long id;
     
-    @Size(max = 4)
+    //@Size(max = 4)
     @ElementCollection
     @CollectionTable(name = "TB_Telefone",
             joinColumns = @JoinColumn(name = "ID_Pessoa"))
@@ -51,20 +47,20 @@ public abstract class PessoaBD implements Serializable {
     @Column(name = "TXT_TELEFONE", table = "TB_Telefone", nullable = false)
     protected Collection<String> telefones;
     
-    @NotBlank
-    @Size(max = 30, min = 3)
-    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.Pessoa.nome}")
+    //@NotBlank
+    //@Size(max = 30, min = 3)
+//    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.Pessoa.nome}")
     @Column(name = "TXT_NOME", length = 30, nullable = false)
     public String nome;
     
-    @NotBlank
-    @Pattern(regexp = "((?=.*\\p{Digit})(?=.*\\p{Lower})(?=.*\\p{Upper})(?=.*\\p{Punct}).{8})", 
-            message = "{com.mycompany.alugaveiculo.Pessoa.senha}")
+//    @NotBlank
+//    @Pattern(regexp = "((?=.*\\p{Digit})(?=.*\\p{Lower})(?=.*\\p{Upper})(?=.*\\p{Punct}).{8})", 
+//            message = "{com.mycompany.alugaveiculo.Pessoa.senha}")
     @Column(name = "TXT_SENHA", length = 8, nullable = false)
     protected String senha;
     
-    @NotNull
-    @Email
+//    @NotNull
+//    @Email
     @Column(name="TXT_EMAIL", nullable = false)
     protected String email;
 

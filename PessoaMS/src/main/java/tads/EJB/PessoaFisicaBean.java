@@ -9,22 +9,20 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
-import javax.validation.executable.ExecutableType;
-import javax.validation.executable.ValidateOnExecution;
+
 
 import tads.entidade.PessoaFisicaBD;
 
 @Stateless(name = "PessoafBean")
 @LocalBean  
-@ValidateOnExecution(type = ExecutableType.ALL)
+//@ValidateOnExecution(type = ExecutableType.ALL)
 public class PessoaFisicaBean {
     
     
     @PersistenceContext(name = "AlugaVeiculoWeb", type = TRANSACTION)
     protected static EntityManager em;
     
-    public boolean existePessoaF(@NotNull PessoaFisicaBD pessoaf){
+    public boolean existePessoaF( PessoaFisicaBD pessoaf){
     TypedQuery<PessoaFisicaBD> query
                 = em.createNamedQuery(PessoaFisicaBD.PessoaFporCpf, PessoaFisicaBD.class);    
         query.setParameter(1, pessoaf.getCpf());
@@ -51,14 +49,14 @@ public class PessoaFisicaBean {
         return pessoaf;
     }
     
-    public static PessoaFisicaBD consultarPessoaFPorId(@NotNull Long id) {
+    public static PessoaFisicaBD consultarPessoaFPorId(Long id) {
     	PessoaFisicaBD pessoaf = em.find(PessoaFisicaBD.class, id);
         System.out.println(pessoaf.getNome());
         return pessoaf;
         
     }
     
-    public String imprimeNome(@NotNull Long id){
+    public String imprimeNome(Long id){
     	PessoaFisicaBD pessoaf = em.find(PessoaFisicaBD.class, id);
         
         return pessoaf.getNome();

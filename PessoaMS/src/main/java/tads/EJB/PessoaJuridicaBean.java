@@ -9,9 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
-import javax.validation.constraints.NotNull;
-import javax.validation.executable.ExecutableType;
-import javax.validation.executable.ValidateOnExecution;
+
 
 import tads.entidade.PessoaJuridicaBD;
 
@@ -21,14 +19,14 @@ import tads.entidade.PessoaJuridicaBD;
  */
 @Stateless(name = "PessoajBean")
 @LocalBean  
-@ValidateOnExecution(type = ExecutableType.ALL)
+//@ValidateOnExecution(type = ExecutableType.ALL)
 public class PessoaJuridicaBean {
  
     
     @PersistenceContext(name = "AlugaVeiculoWeb", type = TRANSACTION)
     protected static EntityManager em;
     
-    public boolean existePessoaJ(@NotNull PessoaJuridicaBD pessoaj){
+    public boolean existePessoaJ(PessoaJuridicaBD pessoaj){
     TypedQuery<PessoaJuridicaBD> query
                 = em.createNamedQuery(PessoaJuridicaBD.PessoaJporCnpj, PessoaJuridicaBD.class);    
         query.setParameter(1, pessoaj.getCnpj());
@@ -53,7 +51,7 @@ public class PessoaJuridicaBean {
         return pessoaj;
     }
     
-    public static PessoaJuridicaBD consultarPessoaJPorId(@NotNull Long id) {
+    public static PessoaJuridicaBD consultarPessoaJPorId(Long id) {
 
         return em.find(PessoaJuridicaBD.class, id);
     }

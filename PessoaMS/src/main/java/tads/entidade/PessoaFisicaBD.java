@@ -12,10 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
 
 
 /**
@@ -53,18 +50,18 @@ public class PessoaFisicaBD extends PessoaBD implements Serializable {
 //        cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Aluguel> alugueis; 
 //    
-    @NotBlank
-    @Size(max = 30 ,min = 3)
-    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.PessoaFisica.sobrenome}")
+//    @NotBlank
+//    @Size(max = 30 ,min = 3)
+//    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.PessoaFisica.sobrenome}")
     @Column(name = "TXT_SOBRENOME", length = 60, nullable = false)
     private String sobrenome;
     
-    @NotNull
+//    @NotNull
     //@CPF
     @Column(name = "TXT_CPF", nullable = false)
     private String cpf;
     
-    @NotBlank
+//    @NotBlank
     @Column(name = "TXT_CREDITOS", nullable = true)
     private String creditos;
     
