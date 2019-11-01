@@ -68,7 +68,26 @@ public class Gateway {
 		System.out.println(response.getStatus());
 		System.out.println(response.readEntity(String.class));		
     	
+		return Response.ok(newUser.getToken()).build();
+    }
+    
+    @POST
+    @Path("/loginpessoaf")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response loginpessoaf(PessoaFisica pessoaf) {
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/loginpessoaf");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(pessoaf, MediaType.APPLICATION_JSON));
+		
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
 		return Response.ok().build();
+    	
     }
     
     @POST
@@ -148,13 +167,7 @@ public class Gateway {
     }
     
     
-//    @POST
-//	@Path("/login")
-//    public Response login(User Pessoa) {
-//		
-//    		
-//		
-//		
-//	}
+    
+    
     
 }

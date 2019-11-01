@@ -7,11 +7,14 @@ import javax.ejb.TransactionAttribute;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
 
 
 import tads.entidade.PessoaFisicaBD;
+
 
 
 @Stateless(name = "PessoafBean")
@@ -72,5 +75,14 @@ public class PessoaFisicaBean {
 		return pessoaf;
 	}
     
+    public static PessoaFisicaBD login(String nome, String senha,String token) {
+		String jpql = ("select pf from PessoaFisicaBD pf where pf.nome= :pNome and pf.senha= :pSenha and pf.token= :pToken");
+        Query query = em.createQuery(jpql);
+        query.setParameter("pNome", nome);
+        query.setParameter("pSenha", senha);
+        query.setParameter("pToken", token);
+        PessoaFisicaBD pessoaf = (PessoaFisicaBD)query.getSingleResult();
+		return pessoaf;
+	}
     
 }

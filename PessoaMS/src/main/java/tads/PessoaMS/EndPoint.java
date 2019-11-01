@@ -1,5 +1,6 @@
 package tads.PessoaMS;
 
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -19,6 +20,7 @@ import tads.entidade.PessoaFisicaBD;
 //import tads.entidades.UserBD;
 //import tads.ms1.PasswordUtils;
 //import tads.ms1.User;
+
 
 
 
@@ -44,17 +46,17 @@ public class EndPoint {
     	return Response.ok(PessoaFisicaBean.consultarPessoaFPorId(id)).build();
     }
 	
-	@POST
-    @Path("/signup")
-	public Response createPessoaFisica(PessoaFisica NewUser) {
-    	String login = NewUser.getNome();
-    	String senha = NewUser.getSenha();
-    	String token = NewUser.getToken();
-    	PessoaFisicaBD user = PessoaFisicaBean.cadastrarPessoaFisica(login, PasswordUtils.digestPassword(senha), token);
-		if (user != null)
-			return Response.ok(user).build();
-		return Response.status(NOT_FOUND).build();
-	}
+//	@POST
+//    @Path("/signup")
+//	public Response createPessoaFisica(PessoaFisica NewUser) {
+//    	String login = NewUser.getNome();
+//    	String senha = NewUser.getSenha();
+//    	String token = NewUser.getToken();
+//    	PessoaFisicaBD user = PessoaFisicaBean.cadastrarPessoaFisica(login, PasswordUtils.digestPassword(senha), token);
+//		if (user != null)
+//			return Response.ok(user).build();
+//		return Response.status(NOT_FOUND).build();
+//	}
     
     
     @POST
@@ -94,6 +96,23 @@ public class EndPoint {
     	  
 		return Response.ok(PessoaFisicaBean.atualizaPessoaF(pessoaf)).build();    	
     }
+    
+    @POST
+	@Path("/loginpessoaf")
+    public Response login(PessoaFisica pessoa) {
+		
+    	String login = pessoa.getNome();
+    	String password = pessoa.getSenha();
+    	String token = pessoa.getToken();
+    	PessoaFisicaBD pessoaf = PessoaFisicaBean.login(login, password, token);
+		if (pessoaf!=null) {
+			//String token = JwTokenHelper.getInstance().generateToken(login, password);
+			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+		}
+		return Response.status(NOT_FOUND).build(); 
+		
+	
+	}
     
     
     
