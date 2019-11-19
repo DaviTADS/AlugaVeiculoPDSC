@@ -53,20 +53,31 @@ public class PessoaFisicaBD extends PessoaBD implements Serializable {
 //    @NotBlank
 //    @Size(max = 30 ,min = 3)
 //    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.PessoaFisica.sobrenome}")
-    @Column(name = "TXT_SOBRENOME", length = 60, nullable = false)
+    @Column(name = "TXT_SOBRENOME", length = 60, nullable = true)
     private String sobrenome;
     
 //    @NotNull
     //@CPF
-    @Column(name = "TXT_CPF", nullable = false)
+    @Column(name = "TXT_CPF", nullable = true)
     private String cpf;
     
 //    @NotBlank
     @Column(name = "TXT_CREDITOS", nullable = true)
     private String creditos;
     
+    @Column(name = "TXT_TOKEN", nullable = true)
+    private String token;
     
-    public String getCpf() {
+    
+    public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getCpf() {
         return cpf;
     }
 

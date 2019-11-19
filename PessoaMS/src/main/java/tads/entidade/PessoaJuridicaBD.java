@@ -60,6 +60,17 @@ public class PessoaJuridicaBD extends PessoaBD implements Serializable {
 //    @NotBlank
     @Column(name = "TXT_CREDITOS")
     private String creditos;
+    
+    @Column(name = "TXT_TOKEN", nullable = true)
+    private String token;
+    
+    public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 
     public String getRazaosocial() {

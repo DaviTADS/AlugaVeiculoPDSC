@@ -54,13 +54,12 @@ public class Gateway {
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(PessoaFisica newUser) {
     	
-    	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        String token = authorizationHeader.substring("Bearer".length()).trim();
+        String token = JwTokenHelper.getInstance().generateToken(newUser.nome, newUser.getSenha());
         newUser.setToken(token);
         System.out.println(token);
         
         Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/signup");
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/criarpessoafisica");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));

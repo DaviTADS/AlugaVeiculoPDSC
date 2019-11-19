@@ -58,25 +58,41 @@ public class EndPoint {
 //		return Response.status(NOT_FOUND).build();
 //	}
     
-    
-    @POST
+	@POST
     @Path("/criarpessoafisica")
 	public Response create(PessoaFisica NewPessoaf) {
     	String nome = NewPessoaf.getNome();
-    	String email = NewPessoaf.getEmail();
-    	String cpf = NewPessoaf.getCpf();
-    	String creditos = NewPessoaf.getCreditos();
-    	String sobrenome = NewPessoaf.getSobrenome();
+    	String senha = NewPessoaf.getSenha();
+    	String token = NewPessoaf.getToken();
+    	//PessoaFisicaBD pessoaf = PessoaFisicaBean.cadastrarPessoaFisica(nome, senha, token);
     	PessoaFisicaBD pessoaf = PessoaFisicaBean.criarPessoaf();
     	pessoaf.setNome(nome);
-    	pessoaf.setSobrenome(sobrenome);
-    	pessoaf.setEmail(email);
-    	pessoaf.setCpf(cpf);
-    	pessoaf.setCreditos(creditos);
-		if (pessoaf != null)
-			return Response.ok(pessoaf).build();
+    	pessoaf.setSenha(senha);
+    	pessoaf.setToken(token);
+    	PessoaFisicaBD pessoafisica = PessoaFisicaBean.persistirPessoaF(pessoaf);
+		if (pessoafisica != null)
+			return Response.ok(pessoafisica).build();
 		return Response.status(NOT_FOUND).build();
 	}
+	
+//    @POST
+//    @Path("/criarpessoafisica")
+//	public Response create(PessoaFisica NewPessoaf) {
+//    	String nome = NewPessoaf.getNome();
+//    	String email = NewPessoaf.getEmail();
+//    	String cpf = NewPessoaf.getCpf();
+//    	String creditos = NewPessoaf.getCreditos();
+//    	String sobrenome = NewPessoaf.getSobrenome();
+//    	PessoaFisicaBD pessoaf = PessoaFisicaBean.criarPessoaf();
+//    	pessoaf.setNome(nome);
+//    	pessoaf.setSobrenome(sobrenome);
+//    	pessoaf.setEmail(email);
+//    	pessoaf.setCpf(cpf);
+//    	pessoaf.setCreditos(creditos);
+//		if (pessoaf != null)
+//			return Response.ok(pessoaf).build();
+//		return Response.status(NOT_FOUND).build();
+//	}
     
     
     @PUT

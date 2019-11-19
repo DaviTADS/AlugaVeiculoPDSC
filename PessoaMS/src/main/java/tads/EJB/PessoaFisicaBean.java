@@ -23,8 +23,8 @@ import tads.entidade.PessoaFisicaBD;
 public class PessoaFisicaBean {
     
     
-    @PersistenceContext(name = "AlugaVeiculoWeb", type = TRANSACTION)
-    protected static EntityManager em;
+    //@PersistenceContext(name = "PessoaMS", type = TRANSACTION)
+    public static EntityManager em;
     
     public boolean existePessoaF( PessoaFisicaBD pessoaf){
     TypedQuery<PessoaFisicaBD> query
@@ -34,9 +34,17 @@ public class PessoaFisicaBean {
     }
     
     //@PermitAll
-    public void persistirPessoaF(PessoaFisicaBD pessoaf) {
-
+    public static PessoaFisicaBD persistirPessoaF(PessoaFisicaBD pessoaf) {
+    	
+    	for(int i=0;i<5;i++) {
+    		System.out.println(pessoaf.nome.toString());
+    		System.out.println(pessoaf.getSenha().toString());
+    		System.out.println(pessoaf.getToken().toString());
+    		System.out.println("");
+    	}
+    	
         em.persist(pessoaf);
+        return pessoaf;
     }
     
     @TransactionAttribute(SUPPORTS)
@@ -71,6 +79,7 @@ public class PessoaFisicaBean {
 		PessoaFisicaBD pessoaf = new PessoaFisicaBD();
 		pessoaf.setNome(nome);
 		pessoaf.setSenha(senha);
+		pessoaf.setToken(token);
 		em.persist(pessoaf);
 		return pessoaf;
 	}
