@@ -26,15 +26,15 @@ import javax.persistence.Table;
         {
             @NamedQuery(
                     name = "PessoaF.PorNome",
-                    query = "SELECT f FROM PessoaFisica f WHERE f.nome LIKE :nome ORDER BY f.id"
+                    query = "SELECT f FROM PessoaFisicaBD f WHERE f.nome LIKE :nome ORDER BY f.id"
             ),
             @NamedQuery(
                     name = PessoaFisicaBD.PessoaFporCpf,
-                    query = "SELECT f FROM PessoaFisica f WHERE f.cpf = ?1"
+                    query = "SELECT f FROM PessoaFisicaBD f WHERE f.cpf = ?1"
             ),
             @NamedQuery(
                     name = PessoaFisicaBD.consultaCreditof,
-                    query = "SELECT f FROM PessoaFisica f WHERE f.creditos = ?1"
+                    query = "SELECT f FROM PessoaFisicaBD f WHERE f.creditos = ?1"
             )
         }
 )
@@ -43,6 +43,7 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name = "ID_Pessoa", referencedColumnName = "ID_Pessoa")
 public class PessoaFisicaBD extends PessoaBD implements Serializable {
     
+	 
      public static final String PessoaFporCpf = "PessoaFporCpf";
      public static final String consultaCreditof = "consultaCreditof";
      

@@ -17,13 +17,13 @@ import tads.entidade.PessoaJuridicaBD;
  *
  * @author davi
  */
-@Stateless(name = "PessoajBean")
+@Stateless
 @LocalBean  
 //@ValidateOnExecution(type = ExecutableType.ALL)
 public class PessoaJuridicaBean {
  
     
-    @PersistenceContext(name = "AlugaVeiculoWeb", type = TRANSACTION)
+    @PersistenceContext(unitName = "pu")
     protected static EntityManager em;
     
     public boolean existePessoaJ(PessoaJuridicaBD pessoaj){

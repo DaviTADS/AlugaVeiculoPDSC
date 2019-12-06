@@ -5,11 +5,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
+
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
 
 
@@ -17,14 +18,13 @@ import tads.entidade.PessoaFisicaBD;
 
 
 
-@Stateless(name = "PessoafBean")
-@LocalBean  
+@Stateless
 //@ValidateOnExecution(type = ExecutableType.ALL)
 public class PessoaFisicaBean {
-    
-    
-    //@PersistenceContext(name = "PessoaMS", type = TRANSACTION)
-    public static EntityManager em;
+	
+	
+	@PersistenceContext(unitName = "pu")
+	private EntityManager em;
     
     public boolean existePessoaF( PessoaFisicaBD pessoaf){
     TypedQuery<PessoaFisicaBD> query
@@ -34,12 +34,13 @@ public class PessoaFisicaBean {
     }
     
     //@PermitAll
-    public static PessoaFisicaBD persistirPessoaF(PessoaFisicaBD pessoaf) {
+    public  PessoaFisicaBD persistirPessoaF(PessoaFisicaBD pessoaf) {
     	
-    	for(int i=0;i<5;i++) {
+    	for(int i=0;i<3;i++) {
     		System.out.println(pessoaf.nome.toString());
     		System.out.println(pessoaf.getSenha().toString());
-    		System.out.println(pessoaf.getToken().toString());
+    		//System.out.println(pessoaf.getToken().toString());
+    		System.out.println(pessoaf.getEmail().toString());
     		System.out.println("");
     	}
     	
@@ -49,19 +50,19 @@ public class PessoaFisicaBean {
     
     @TransactionAttribute(SUPPORTS)
     //@PermitAll
-    public static PessoaFisicaBD criarPessoaf() {
+    public PessoaFisicaBD criarPessoaf() {
 
         return new PessoaFisicaBD();
     }
     
-    public static PessoaFisicaBD atualizaPessoaF(PessoaFisicaBD pessoaf) {
+    public PessoaFisicaBD atualizaPessoaF(PessoaFisicaBD pessoaf) {
 
         pessoaf = em.merge(pessoaf);
         em.flush();
         return pessoaf;
     }
     
-    public static PessoaFisicaBD consultarPessoaFPorId(Long id) {
+    public PessoaFisicaBD consultarPessoaFPorId(Long id) {
     	PessoaFisicaBD pessoaf = em.find(PessoaFisicaBD.class, id);
         System.out.println(pessoaf.getNome());
         return pessoaf;
@@ -75,7 +76,7 @@ public class PessoaFisicaBean {
         
     }
     
-    public static PessoaFisicaBD cadastrarPessoaFisica(String nome, String senha,String token) {
+    public  PessoaFisicaBD cadastrarPessoaFisica(String nome, String senha,String token) {
 		PessoaFisicaBD pessoaf = new PessoaFisicaBD();
 		pessoaf.setNome(nome);
 		pessoaf.setSenha(senha);
@@ -84,13 +85,16 @@ public class PessoaFisicaBean {
 		return pessoaf;
 	}
     
-    public static PessoaFisicaBD login(String nome, String senha,String token) {
-		String jpql = ("select pf from PessoaFisicaBD pf where pf.nome= :pNome and pf.senha= :pSenha and pf.token= :pToken");
+    public  PessoaFisicaBD login(String nome, String senha,String token) {
+		String jpql = ("select pf from PessoaFisicaBD pf where pf.nome= :pNome and pf.senha= :pSenha");
         Query query = em.createQuery(jpql);
         query.setParameter("pNome", nome);
         query.setParameter("pSenha", senha);
-        query.setParameter("pToken", token);
         PessoaFisicaBD pessoaf = (PessoaFisicaBD)query.getSingleResult();
+        if(pessoaf != null) {
+        	pessoaf.setToken(token);;
+        	atualizaPessoaF(pessoaf);
+        }
 		return pessoaf;
 	}
     

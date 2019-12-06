@@ -4,6 +4,8 @@ import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -11,6 +13,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -32,6 +35,12 @@ import tads.entidade.PessoaFisicaBD;
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class EndPoint {
+	
+	@EJB
+    private PessoaFisicaBean PessoaFisicaBean;
+	
+	@Context
+	private HttpServletRequest httpRequest;
 
     /**
      * Method handling HTTP GET requests. The returned object will be sent
@@ -63,12 +72,14 @@ public class EndPoint {
 	public Response create(PessoaFisica NewPessoaf) {
     	String nome = NewPessoaf.getNome();
     	String senha = NewPessoaf.getSenha();
-    	String token = NewPessoaf.getToken();
+    	//String token = NewPessoaf.getToken();
+    	String email = NewPessoaf.getEmail();
     	//PessoaFisicaBD pessoaf = PessoaFisicaBean.cadastrarPessoaFisica(nome, senha, token);
     	PessoaFisicaBD pessoaf = PessoaFisicaBean.criarPessoaf();
     	pessoaf.setNome(nome);
     	pessoaf.setSenha(senha);
-    	pessoaf.setToken(token);
+    	//pessoaf.setToken(token);
+    	pessoaf.setEmail(email);
     	PessoaFisicaBD pessoafisica = PessoaFisicaBean.persistirPessoaF(pessoaf);
 		if (pessoafisica != null)
 			return Response.ok(pessoafisica).build();

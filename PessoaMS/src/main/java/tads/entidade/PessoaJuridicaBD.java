@@ -26,11 +26,11 @@ import javax.persistence.Table;
         {
             @NamedQuery(
                     name = PessoaJuridicaBD.PessoaJporCnpj,
-                    query = "SELECT j FROM PessoaJuridica j WHERE j.cnpj = ?1"
+                    query = "SELECT j FROM PessoaJuridicaBD j WHERE j.cnpj = ?1"
             ),
             @NamedQuery(
                     name = PessoaJuridicaBD.consultaCreditoj,
-                    query = "SELECT j FROM PessoaJuridica j WHERE j.creditos = ?1"
+                    query = "SELECT j FROM PessoaJuridicaBD j WHERE j.creditos = ?1"
             )
         }
 )
@@ -54,7 +54,7 @@ public class PessoaJuridicaBD extends PessoaBD implements Serializable {
     
 //    @NotNull
     //@CNPJ
-    @Column(name = "TXT_CNPJ", nullable = false)
+    @Column(name = "TXT_CNPJ", nullable = true)
     private String cnpj;
     
 //    @NotBlank

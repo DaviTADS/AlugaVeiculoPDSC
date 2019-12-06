@@ -44,7 +44,7 @@ public abstract class PessoaBD implements Serializable {
     @CollectionTable(name = "TB_Telefone",
             joinColumns = @JoinColumn(name = "ID_Pessoa"))
     //@Basic(fetch = FetchType.LAZY)
-    @Column(name = "TXT_TELEFONE", table = "TB_Telefone", nullable = false)
+    @Column(name = "TXT_TELEFONE", table = "TB_Telefone", nullable = true)
     protected Collection<String> telefones;
     
     //@NotBlank
@@ -61,7 +61,7 @@ public abstract class PessoaBD implements Serializable {
     
 //    @NotNull
 //    @Email
-    @Column(name="TXT_EMAIL", nullable = false)
+    @Column(name="TXT_EMAIL")
     protected String email;
 
     public Long getId() {
