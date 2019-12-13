@@ -3,7 +3,7 @@ package tads.PessoaMS;
 import java.util.List;
 
 
-public class Motorista {
+public class Motorista extends Pessoa{
 
 	private List<String> habilitacoes;
 	private String sobrenome;

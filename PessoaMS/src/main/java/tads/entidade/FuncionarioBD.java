@@ -45,6 +45,9 @@ public class FuncionarioBD extends PessoaBD implements Serializable{
     
     @Column(name = "FT_SALARIO", nullable = false)
     private float salario;
+    
+    @Column(name = "FT_TOKEN", nullable = false)
+    private String token;
 
 	public String getCargo() {
 		return cargo;
@@ -92,6 +95,14 @@ public class FuncionarioBD extends PessoaBD implements Serializable{
 
 	public void setSalario(float salario) {
 		this.salario = salario;
+	}
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
 	}
     
     

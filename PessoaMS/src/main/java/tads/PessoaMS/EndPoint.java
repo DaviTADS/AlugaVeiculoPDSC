@@ -133,7 +133,6 @@ public class EndPoint {
     	String token = pessoa.getToken();
     	PessoaFisicaBD pessoaf = PessoaFisicaBean.login(login, password, token);
 		if (pessoaf!=null) {
-			//String token = JwTokenHelper.getInstance().generateToken(login, password);
 			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
 		}
 		return Response.status(NOT_FOUND).build(); 

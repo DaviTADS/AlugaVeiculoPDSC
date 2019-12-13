@@ -6,10 +6,12 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import tads.entidade.FuncionarioBD;
 import tads.entidade.PessoaFisicaBD;
+
 
 
 @Stateless
@@ -33,7 +35,7 @@ public class FuncionarioBean {
     }
     
     @TransactionAttribute(SUPPORTS)
-    public FuncionarioBD criarPessoaf() {
+    public FuncionarioBD criarfuncionario() {
 
         return new FuncionarioBD();
     }
@@ -51,5 +53,18 @@ public class FuncionarioBean {
         return func;
         
     }
+    
+    public  FuncionarioBD login(String nome, String senha,String token) {
+		String jpql = ("select f from FuncionarioBD f where f.nome= :pNome and f.senha= :pSenha");
+        Query query = em.createQuery(jpql);
+        query.setParameter("pNome", nome);
+        query.setParameter("pSenha", senha);
+        FuncionarioBD func = (FuncionarioBD)query.getSingleResult();
+        if(func != null) {
+        	func.setToken(token);
+        	atualizaFuncionario(func);
+        }
+		return func;
+	}
 	
 }
