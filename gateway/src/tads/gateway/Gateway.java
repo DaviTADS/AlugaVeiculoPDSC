@@ -35,27 +35,12 @@ public class Gateway {
 	@Context
 	private HttpServletRequest httpRequest;
 
-    @GET
-    @Path("/all_users")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Response allUsers() {
-
-		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/ms1/api/users/all");
-		
-		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.get();
-		
-		return response;
-    }
     
     @POST
     @Path("/new_pessoafisica")
     @Produces(MediaType.APPLICATION_JSON)
     public Response addUser(PessoaFisica newUser) {
     	
-        
-        
         Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/criarpessoafisica");
 		
@@ -68,6 +53,44 @@ public class Gateway {
 		return Response.ok(newUser.getToken()).build();
     }
     
+    @GET
+    @Path("/getpessoafisica/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPessoaFisicaByID(PessoaFisica pessoaf) {
+    	
+    	Long pessoaid = pessoaf.getId();
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/{pessoaid}");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(pessoaf, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok(pessoaf.getToken()).build();
+    	
+    }
+    
+    @POST
+    @Path("/editapessoafisica")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editaPessoaf(PessoaFisica changeUser) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/atualizarpessoafisica");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(changeUser, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok(changeUser.getToken()).build();
+    }
+
     @POST
     @Path("/loginpessoaf")
     @Produces(MediaType.APPLICATION_JSON)
@@ -92,6 +115,40 @@ public class Gateway {
     }
     
     @POST
+    @Path("/new_pessoajuridica")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addPessoaJuridica(PessoaJuridica newUser) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/criarpessoajuridica");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok(newUser.getToken()).build();
+    }
+    
+    @POST
+    @Path("/editapessoajuridica")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response editaPessoaJuridica(PessoaJuridica newUser) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/atualizarpessoajuridica");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok(newUser.getToken()).build();
+    }
+    
+    @POST
     @Path("/loginpessoaj")
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -102,7 +159,7 @@ public class Gateway {
         System.out.println(token);
     	
     	Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoafisica/loginpessoaf");
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/loginpessoaj");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(pessoaj, MediaType.APPLICATION_JSON));
@@ -114,36 +171,37 @@ public class Gateway {
     	
     }
     
-    @POST
-    @Path("/new_pessoajuridica")
+    @GET
+    @Path("/getpessoajuridica/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addUser(PessoaJuridica newUser) {
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPessoaJuridicaByID(PessoaJuridica pessoaj) {
     	
-//    	String authorizationHeader = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
-//        String token = authorizationHeader.substring("Bearer".length()).trim();
-//        newUser.setToken(token);
-//        System.out.println(token);
-        
-        Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/signup");
+    	Long pessoaid = pessoaj.getId();
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/pessoajuridica/{pessoaid}");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
-		Response response = invocationBuilder.post(Entity.entity(newUser, MediaType.APPLICATION_JSON));
+		Response response = invocationBuilder.post(Entity.entity(pessoaj, MediaType.APPLICATION_JSON));
 		 
 		System.out.println(response.getStatus());
 		System.out.println(response.readEntity(String.class));		
     	
-		return Response.ok().build();
+		return Response.ok(pessoaj.getToken()).build();
+    	
     }
+    
     
     @GET
     @Path("/veiculos")
     @Consumes(MediaType.APPLICATION_JSON)
     public Response getVeiculobyId(Veiculo veiculo) {
     	
+    	Long veiculoid = veiculo.getId();
         
 		Client client = ClientBuilder.newClient();
-		WebTarget webTarget = client.target("http://localhost:8080/VeiculoMS/api/veiculos/{id}");
+		WebTarget webTarget = client.target("http://localhost:8080/VeiculoMS/api/veiculos/{veiculoid}");
 		
 		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
 		Response response = invocationBuilder.post(Entity.entity(veiculo, MediaType.APPLICATION_JSON));
@@ -191,7 +249,94 @@ public class Gateway {
     }
     
     
+    @POST
+    @Path("/new_motorista")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addMotorista(Motorista newMotorista) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/motorista/criarmotorista");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newMotorista, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @POST
+    @Path("/new_funcionario")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addFuncionario(Funcionario newFuncionario) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/funcionario/criarfuncionario");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newFuncionario, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok(newFuncionario.getToken()).build();
+    }
     
     
+    @POST
+    @Path("/new_aluguel")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAluguel(Aluguel newAluguel) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/Aluguel/api/aluguel/criaraluguel");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(newAluguel, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @POST
+    @Path("/edita_aluguel")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response atualizaAluguel(Aluguel changealuguel) {
+    	
+        Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/Aluguel/api/aluguel/editaraluguel");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(changealuguel, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    }
+    
+    @GET
+    @Path("/getaluguel/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getAluguelByID(Aluguel aluguel) {
+    	
+    	Long aluguelId = aluguel.getId();
+    	
+    	Client client = ClientBuilder.newClient();
+		WebTarget webTarget = client.target("http://localhost:8080/PessoaMS/api/aluguel/{aluguelId}");
+		
+		Invocation.Builder invocationBuilder =  webTarget.request(MediaType.APPLICATION_JSON);
+		Response response = invocationBuilder.post(Entity.entity(aluguel, MediaType.APPLICATION_JSON));
+		 
+		System.out.println(response.getStatus());
+		System.out.println(response.readEntity(String.class));		
+    	
+		return Response.ok().build();
+    	
+    }
     
 }

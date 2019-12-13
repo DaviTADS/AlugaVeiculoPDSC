@@ -1,4 +1,4 @@
-package tads.PessoaMS;
+package tads.gateway;
 
 import java.util.List;
 

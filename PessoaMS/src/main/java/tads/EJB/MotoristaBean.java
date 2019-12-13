@@ -28,14 +28,15 @@ public class MotoristaBean {
     
 		 public boolean existeMotorista(MotoristaBD motorista){
 			    TypedQuery<MotoristaBD> query
-			                = em.createNamedQuery(MotoristaBD.MotoristaPorReputacao, MotoristaBD.class);    
+			                = em.createNamedQuery(MotoristaBD.MotoristaPorHabilitacao, MotoristaBD.class);    
 			        query.setParameter(1, motorista.getHabilitacoes());
 			        return !query.getResultList().isEmpty();
 			    }
 			    
-			    public void persistirMotorista(MotoristaBD motorista) {
+			    public MotoristaBD persistirMotorista(MotoristaBD motorista) {
 
 			        em.persist(motorista);
+			        return motorista;
 			    }
 			    
 			    @TransactionAttribute(SUPPORTS)
@@ -52,8 +53,10 @@ public class MotoristaBean {
 			    }
 			    
 			    public MotoristaBD consultarMotoristaPorId(Long id) {
-
-			        return em.find(MotoristaBD.class, id);
+			    	MotoristaBD mot = em.find(MotoristaBD.class, id);
+			    	
+			        return mot;
+			        
 			    }
 			    
 			  

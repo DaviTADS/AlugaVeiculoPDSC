@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @NamedQueries(
         {
               @NamedQuery(
-                    name = MotoristaBD.MotoristaPorReputacao,
+                    name = MotoristaBD.MotoristaPorHabilitacao,
                     query = "SELECT m FROM MotoristaBD m WHERE m.habilitacoes = ?1"
             ) 
 //            @NamedQuery(
@@ -31,7 +31,7 @@ public class MotoristaBD extends PessoaBD implements Serializable {
 
 	
 	public static final String MotoristaComVeiculo = "MotoristaComVeiculo";
-    public static final String MotoristaPorReputacao = "MotoristaPorReputacao";
+    public static final String MotoristaPorHabilitacao= "MotoristaPorHabilitacao";
     
    
     @Column(name = "TXT_Habilitacao", nullable = false)

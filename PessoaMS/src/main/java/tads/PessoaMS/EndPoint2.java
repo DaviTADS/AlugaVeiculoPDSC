@@ -1,5 +1,6 @@
 package tads.PessoaMS;
 
+import static javax.ws.rs.core.HttpHeaders.AUTHORIZATION;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
@@ -110,7 +111,21 @@ public class EndPoint2 {
 		return Response.ok(PessoaJuridicaBean.atualizaPessoaj(pessoaj)).build();    	
     }
     
-    
+    @POST
+	@Path("/loginpessoaj")
+    public Response login(PessoaJuridica pessoaj) {
+		
+    	String login = pessoaj.getNome();
+    	String password = pessoaj.getSenha();
+    	String token = pessoaj.getToken();
+    	PessoaJuridicaBD pessoajuridica = PessoaJuridicaBean.login(login, password, token);
+		if (pessoajuridica!=null) {
+			return Response.ok().header(AUTHORIZATION, "Bearer " + token).build();
+		}
+		return Response.status(NOT_FOUND).build(); 
+		
+	
+	} 
     
    
 }
