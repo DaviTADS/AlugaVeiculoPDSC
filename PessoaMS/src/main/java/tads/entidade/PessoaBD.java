@@ -23,10 +23,6 @@ import javax.persistence.Table;
  * @author davi
  */
 @Entity
-//@SecondaryTable(name = "TB_Telefone",
-  //      pkJoinColumns = {
-  //     @PrimaryKeyJoinColumn(name = "ID_Pessoa")}
-//)
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "DISC_Pessoa",
 discriminatorType = DiscriminatorType.STRING, length = 1)
@@ -39,23 +35,18 @@ public abstract class PessoaBD implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)    
     protected Long id;
     
-    //@Size(max = 4)
+    
     @ElementCollection
     @CollectionTable(name = "TB_Telefone",
-            joinColumns = @JoinColumn(name = "ID_Pessoa"))
-    //@Basic(fetch = FetchType.LAZY)
+    joinColumns = @JoinColumn(name = "ID_Pessoa"))
     @Column(name = "TXT_TELEFONE", table = "TB_Telefone", nullable = true)
     protected Collection<String> telefones;
     
-    //@NotBlank
-    //@Size(max = 30, min = 3)
-//    @Pattern(regexp = "\\p{Upper}{1}\\p{Lower}+", message = "{com.mycompany.alugaveiculo.Pessoa.nome}")
+
     @Column(name = "TXT_NOME", length = 30, nullable = false)
     protected String nome;
     
-//    @NotBlank
-//    @Pattern(regexp = "((?=.*\\p{Digit})(?=.*\\p{Lower})(?=.*\\p{Upper})(?=.*\\p{Punct}).{8})", 
-//            message = "{com.mycompany.alugaveiculo.Pessoa.senha}")
+
     @Column(name = "TXT_SENHA", length = 8, nullable = false)
     protected String senha;
     

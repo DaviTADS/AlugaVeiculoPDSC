@@ -7,9 +7,12 @@ import javax.ejb.TransactionAttribute;
 import static javax.ejb.TransactionAttributeType.SUPPORTS;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
 import static javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
 
+import tads.entidade.PessoaFisicaBD;
 import tads.entidade.PessoaJuridicaBD;
 import tads.entidade.PessoaJuridicaBD;
 
@@ -61,6 +64,19 @@ public class PessoaJuridicaBean {
 		pessoaj.setNome(nome);
 		pessoaj.setSenha(senha);
 		em.persist(pessoaj);
+		return pessoaj;
+	}
+    
+    public  PessoaJuridicaBD login(String nome, String senha,String token) {
+		String jpql = ("select pj from PessoaJuridicaBD pj where pj.nome= :pNome and pj.senha= :pSenha");
+        Query query = em.createQuery(jpql);
+        query.setParameter("pNome", nome);
+        query.setParameter("pSenha", senha);
+        PessoaJuridicaBD pessoaj = (PessoaJuridicaBD)query.getSingleResult();
+        if(pessoaj != null) {
+        	pessoaj.setToken(token);
+        	atualizaPessoaj(pessoaj);
+        }
 		return pessoaj;
 	}
     

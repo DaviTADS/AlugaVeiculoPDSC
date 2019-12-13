@@ -92,7 +92,7 @@ public class PessoaFisicaBean {
         query.setParameter("pSenha", senha);
         PessoaFisicaBD pessoaf = (PessoaFisicaBD)query.getSingleResult();
         if(pessoaf != null) {
-        	pessoaf.setToken(token);;
+        	pessoaf.setToken(token);
         	atualizaPessoaF(pessoaf);
         }
 		return pessoaf;
