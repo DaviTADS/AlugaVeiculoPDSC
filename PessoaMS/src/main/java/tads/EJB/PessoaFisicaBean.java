@@ -23,8 +23,8 @@ import tads.entidade.PessoaFisicaBD;
 public class PessoaFisicaBean {
 	
 	
-	@PersistenceContext(unitName = "pu")
-	private EntityManager em;
+		@PersistenceContext(unitName = "pu")
+		private EntityManager em;
     
     public boolean existePessoaF( PessoaFisicaBD pessoaf){
     TypedQuery<PessoaFisicaBD> query
@@ -37,7 +37,7 @@ public class PessoaFisicaBean {
     public  PessoaFisicaBD persistirPessoaF(PessoaFisicaBD pessoaf) {
     	
     	for(int i=0;i<3;i++) {
-    		System.out.println(pessoaf.nome.toString());
+    		System.out.println(pessoaf.getNome().toString());
     		System.out.println(pessoaf.getSenha().toString());
     		//System.out.println(pessoaf.getToken().toString());
     		System.out.println(pessoaf.getEmail().toString());

@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import static javax.ejb.TransactionAttributeType.SUPPORTS;
+//import  javax.ejb.TransactionAttributeType.SUPPORTS;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import static javax.persistence.PersistenceContextType.TRANSACTION;
+//import  javax.persistence.PersistenceContextType.TRANSACTION;
 import javax.persistence.TypedQuery;
 
 
@@ -18,8 +18,8 @@ import tads.entidade.VeiculoBD;
 @LocalBean
 public class VeiculoBean {
 
-    @PersistenceContext(name = "AlugaVeiculoWeb", type = TRANSACTION)
-    protected static EntityManager em;
+	@PersistenceContext(unitName = "pu")
+	private EntityManager em;
 
     
     public boolean existeVeiculo(VeiculoBD veiculo) {
@@ -30,37 +30,37 @@ public class VeiculoBean {
     }
     
     
-    public static void persistirVeiculo(VeiculoBD veiculo) {
+    public  void persistirVeiculo(VeiculoBD veiculo) {
 
         em.persist(veiculo);
     }
     
-    @TransactionAttribute(SUPPORTS)
-    public static VeiculoBD criarVeiculo() {
+//    @TransactionAttribute(SUPPORTS)
+    public  VeiculoBD criarVeiculo() {
 
         return new VeiculoBD();
     }
 
-    public static VeiculoBD atualizaVeiculo(VeiculoBD veiculo) {
+    public  VeiculoBD atualizaVeiculo(VeiculoBD veiculo) {
 
         veiculo = em.merge(veiculo);
         em.flush();
         return veiculo;
     }
 
-    public static String consultarPorId(Long id) {
+    public  String consultarPorId(Long id) {
     	VeiculoBD vei = em.find(VeiculoBD.class, id);
         return vei.getModelo();
     }
 
-    @TransactionAttribute(SUPPORTS)
+//    @TransactionAttribute(SUPPORTS)
     public List<VeiculoBD> consultaVeiculosComMotorista() {
         TypedQuery<VeiculoBD> query = em.createNamedQuery(VeiculoBD.VeiculoPorMotorista, VeiculoBD.class);
 
         return query.getResultList();
     }
 
-    @TransactionAttribute(SUPPORTS)
+//    @TransactionAttribute(SUPPORTS)
     public List<VeiculoBD> consultaVeiculosPorTipo(String tipo) {
         TypedQuery<VeiculoBD> query = em.createNamedQuery(VeiculoBD.VeiculoPorTipo, VeiculoBD.class);
         query.setParameter(1, tipo);

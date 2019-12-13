@@ -3,6 +3,8 @@ package tads.PessoaMS;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.Response.Status.NOT_FOUND;
 
+import javax.ejb.EJB;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,6 +12,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 
 import tads.EJB.PessoaFisicaBean;
@@ -23,7 +26,7 @@ import tads.entidade.PessoaJuridicaBD;
 /**
  * Root resource (exposed at "PessoaJuridica" path)
  */
-@Path("pessoajuridica")
+@Path("/pessoajuridica")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class EndPoint2 {
@@ -40,6 +43,15 @@ public class EndPoint2 {
      *
      * @return String that will be returned as a text/plain response.
      */
+	
+	@EJB
+    private PessoaJuridicaBean PessoaJuridicaBean;
+	
+	@Context
+	private HttpServletRequest httpRequest;
+
+	
+	
 	@GET
     @Path("{id}")
     public Response getPessoaJuridicaById(@PathParam("id") Long id) {

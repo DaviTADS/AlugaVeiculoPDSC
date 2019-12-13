@@ -23,8 +23,8 @@ import tads.entidade.PessoaJuridicaBD;
 public class PessoaJuridicaBean {
  
     
-    @PersistenceContext(unitName = "pu")
-    protected static EntityManager em;
+	@PersistenceContext(unitName = "pu")
+	private EntityManager em;
     
     public boolean existePessoaJ(PessoaJuridicaBD pessoaj){
     TypedQuery<PessoaJuridicaBD> query
@@ -39,24 +39,24 @@ public class PessoaJuridicaBean {
     }
     
     @TransactionAttribute(SUPPORTS)
-    public static PessoaJuridicaBD criarPessoaj() {
+    public PessoaJuridicaBD criarPessoaj() {
 
         return new PessoaJuridicaBD();
     }
     
-    public static PessoaJuridicaBD atualizaPessoaj(PessoaJuridicaBD pessoaj) {
+    public PessoaJuridicaBD atualizaPessoaj(PessoaJuridicaBD pessoaj) {
 
         pessoaj = em.merge(pessoaj);
         em.flush();
         return pessoaj;
     }
     
-    public static PessoaJuridicaBD consultarPessoaJPorId(Long id) {
+    public PessoaJuridicaBD consultarPessoaJPorId(Long id) {
 
         return em.find(PessoaJuridicaBD.class, id);
     }
     
-    public static PessoaJuridicaBD cadastrarPessoaJuridica(String nome, String senha,String token) {
+    public  PessoaJuridicaBD cadastrarPessoaJuridica(String nome, String senha,String token) {
 		PessoaJuridicaBD pessoaj = new PessoaJuridicaBD();
 		pessoaj.setNome(nome);
 		pessoaj.setSenha(senha);

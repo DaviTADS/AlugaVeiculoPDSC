@@ -31,7 +31,7 @@ import tads.entidade.PessoaFisicaBD;
 /**
  * Root resource (exposed at "PessoaFisica" path)
  */
-@Path("pessoafisica")
+@Path("/pessoafisica")
 @Produces(APPLICATION_JSON)
 @Consumes(APPLICATION_JSON)
 public class EndPoint {
@@ -49,7 +49,7 @@ public class EndPoint {
      * @return String that will be returned as a text/plain response.
      */
 	@GET
-    @Path("{id}")
+    @Path("/{id}")
     public Response getPessoaFisicaById(@PathParam("id") Long id) {
     	
     	return Response.ok(PessoaFisicaBean.consultarPessoaFPorId(id)).build();
